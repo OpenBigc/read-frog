@@ -115,7 +115,6 @@ options:
     product: Продукт
   tools:
     translationHub: Центр переводов
-    pdfTranslation: Перевод PDF
   product:
     roadmap: Дорожная карта
   helpAndCommunity:
@@ -251,7 +250,7 @@ options:
       name:
         builtInAi: Встроенный ИИ
         builtInAiAdvance: Продвинутый встроенный ИИ
-        customChatComplete: Пользовательский Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Пользовательский Responses
       attribution:
         builtInAi: Стандартная модель, размещённая Read Frog. Подписчики Pro и Ultra могут использовать её во всех функциях в рамках недельной квоты; на бесплатном тарифе она доступна только в пользовательских AI-действиях.
@@ -1925,3 +1924,24 @@ languages:
   wls: Уоллисский
   rar: Раротонганский
   hif: Фиджийский хинди
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

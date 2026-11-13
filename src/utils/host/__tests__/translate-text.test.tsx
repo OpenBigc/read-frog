@@ -137,11 +137,13 @@ describe("translate-text", () => {
             JSON.stringify(googleProvider),
             DEFAULT_CONFIG.language.sourceCode,
             DEFAULT_CONFIG.language.targetCode,
-            "textFormat:plain",
+            "Translate to {{targetLang}}",
+            "{{input}}",
+            "enableAIContentAware=false",
           ),
         }),
       )
-      expect(mockGetOrCreateWebPageContext).not.toHaveBeenCalled()
+      expect(mockGetOrCreateWebPageContext).toHaveBeenCalledOnce()
       expect(mockGetOrGenerateWebPageSummary).not.toHaveBeenCalled()
     })
 
@@ -333,7 +335,7 @@ describe("translate-text", () => {
         ...DEFAULT_CONFIG,
         pageTranslation: {
           ...DEFAULT_CONFIG.pageTranslation,
-          providerId: "openai-default",
+          providerId: "deepseek-default",
           enableAIContentAware: false,
         },
       }
@@ -367,7 +369,7 @@ describe("translate-text", () => {
         ...DEFAULT_CONFIG,
         pageTranslation: {
           ...DEFAULT_CONFIG.pageTranslation,
-          providerId: "openai-default",
+          providerId: "deepseek-default",
           enableAIContentAware: true,
         },
       }
@@ -401,7 +403,7 @@ describe("translate-text", () => {
         ...DEFAULT_CONFIG,
         pageTranslation: {
           ...DEFAULT_CONFIG.pageTranslation,
-          providerId: "openai-default",
+          providerId: "deepseek-default",
           enableAIContentAware: false,
         },
       }
@@ -439,20 +441,20 @@ describe("translate-text", () => {
       expect(onTargetLanguageResolved).toHaveBeenCalledWith("cmn")
     })
 
-    it("skips webpage context loading for non-llm input translations", async () => {
+    it("loads webpage metadata for the default custom model", async () => {
       mockSendMessage.mockResolvedValue("translated input")
 
       const result = await translateTextForInput("hello", "eng", "cmn")
 
       expect(result).toBe("translated input")
-      expect(mockGetOrCreateWebPageContext).not.toHaveBeenCalled()
+      expect(mockGetOrCreateWebPageContext).toHaveBeenCalledOnce()
       expect(mockGetOrGenerateWebPageSummary).not.toHaveBeenCalled()
       expect(mockSendMessage).toHaveBeenCalledWith(
         "enqueueTranslateRequest",
         expect.objectContaining({
           text: "hello",
-          webTitle: undefined,
-          webContent: undefined,
+          webTitle: "Document Title",
+          webContent: "Body content",
           webSummary: undefined,
         }),
       )
@@ -467,7 +469,7 @@ describe("translate-text", () => {
         },
         inputTranslation: {
           ...DEFAULT_CONFIG.inputTranslation,
-          providerId: "openai-default",
+          providerId: "deepseek-default",
         },
       }
 
@@ -506,7 +508,7 @@ describe("translate-text", () => {
         },
         inputTranslation: {
           ...DEFAULT_CONFIG.inputTranslation,
-          providerId: "openai-default",
+          providerId: "deepseek-default",
         },
       })
       mockGetOrGenerateWebPageSummary.mockRejectedValue(
@@ -540,12 +542,12 @@ describe("translate-text", () => {
       ...DEFAULT_CONFIG,
       pageTranslation: {
         ...DEFAULT_CONFIG.pageTranslation,
-        providerId: "openai-default",
+        providerId: "deepseek-default",
         enableAIContentAware: true,
       },
       inputTranslation: {
         ...DEFAULT_CONFIG.inputTranslation,
-        providerId: "openai-default",
+        providerId: "deepseek-default",
       },
     }
 

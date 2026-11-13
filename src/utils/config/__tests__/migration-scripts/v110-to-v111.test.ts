@@ -15,7 +15,8 @@ describe("v110-to-v111 migration", () => {
       name: "Sentence Analysis",
       enabled: true,
       icon: "tabler:sparkles",
-      providerId: DEFAULT_CONFIG.selectionToolbar.customActions[0]?.providerId ?? "openai-default",
+      providerId:
+        DEFAULT_CONFIG.selectionToolbar.customActions[0]?.providerId ?? "deepseek-default",
       systemPrompt: "",
       prompt: "{{selection}}",
       outputSchema: [

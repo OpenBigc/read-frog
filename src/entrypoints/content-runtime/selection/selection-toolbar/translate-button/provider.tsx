@@ -31,7 +31,6 @@ import {
   createSelectionToolbarRuntimeError,
   isAbortError,
 } from "@/components/ui/selection-popover/inline-error"
-import { ReviewDueTab } from "@/components/ui/selection-popover/review-due-tab"
 import { SelectionToolbarErrorAlert } from "@/components/ui/selection-popover/selection-toolbar-error-alert"
 import { SelectionToolbarFooterContent } from "@/components/ui/selection-popover/selection-toolbar-footer-content"
 import { SelectionToolbarTitleContent } from "@/components/ui/selection-popover/selection-toolbar-title-content"
@@ -907,7 +906,6 @@ export function SelectionTranslationProvider({ children }: { children: ReactNode
               )}
             <SelectionToolbarErrorAlert error={error} className="-mt-3" />
           </SelectionPopover.Body>
-          <ReviewDueTab source="extension_selection_translation" />
           <TranslateFooterContent
             paragraphsText={paragraphsText}
             providers={translateProviders}

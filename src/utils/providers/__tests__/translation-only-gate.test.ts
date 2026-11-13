@@ -22,8 +22,8 @@ describe("providerSupportsTranslationOnlyMode", () => {
 })
 
 describe("getTranslationOnlyBlockedReason", () => {
-  it("blocks a fresh profile, which ships on Microsoft", () => {
-    expect(getTranslationOnlyBlockedReason(DEFAULT_CONFIG)).not.toBeNull()
+  it("allows a fresh profile using a custom API", () => {
+    expect(getTranslationOnlyBlockedReason(DEFAULT_CONFIG)).toBeNull()
   })
 
   it("clears once page translation moves to a provider that keeps markup", () => {

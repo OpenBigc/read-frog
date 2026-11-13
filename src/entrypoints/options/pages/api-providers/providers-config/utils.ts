@@ -1,5 +1,6 @@
 import type { Config } from "@/types/config/config"
 import type { APIProviderConfig, APIProviderTypes } from "@/types/config/provider"
+import { isLocalProviderType } from "@/utils/constants/local-providers"
 import {
   DEFAULT_PROVIDER_CONFIG,
   getDefaultProviderDescription,
@@ -14,6 +15,7 @@ export async function addProvider(
   setProvidersConfig: (config: Partial<Config["providersConfig"]>) => Promise<void>,
   setSelectedProviderId?: (id: string) => void,
 ): Promise<string> {
+  if (!isLocalProviderType(providerType)) throw new Error("Unsupported provider")
   const existingNames = new Set(providersConfig.map((p) => p.name))
   const providerName = getUniqueName(getProviderItemName(providerType), existingNames)
 
@@ -42,6 +44,7 @@ export async function duplicateProvider(
   setSelectedProviderId?: (id: string) => void,
 ): Promise<string> {
   const existingNames = new Set(providersConfig.map((p) => p.name))
+  if (!isLocalProviderType(providerConfig.provider)) throw new Error("Unsupported provider")
   const newProvider: APIProviderConfig = {
     ...structuredClone(providerConfig),
     id: getRandomUUID(),

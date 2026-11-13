@@ -41,7 +41,7 @@ vi.mock("@/components/llm-providers/use-hosted-ai-status", () => ({
   }),
 }))
 
-const localProvider = structuredClone(DEFAULT_PROVIDER_CONFIG.openai)
+const localProvider = structuredClone(DEFAULT_PROVIDER_CONFIG.deepseek)
 
 function renderLanguageDetection(mode: "basic" | "llm") {
   const store = createStore()

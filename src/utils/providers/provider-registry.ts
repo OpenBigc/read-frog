@@ -8,6 +8,7 @@ import type {
 } from "@/utils/providers/provider-display"
 import readFrogLogo from "@/assets/providers/read-frog-provider.png?url&no-inline"
 import { isLLMProviderConfig, isTranslateProviderConfig } from "@/types/config/provider"
+import { isLocalProviderType } from "@/utils/constants/local-providers"
 import {
   BUILT_IN_AI_PROVIDER_ID,
   BUILT_IN_AI_PROVIDER_IDS,
@@ -97,7 +98,7 @@ const SYSTEM_PROVIDER_DEFS = {
 } as const satisfies Record<string, SystemProviderDef>
 
 function getSystemProviderDefs(): SystemProviderDef[] {
-  return Object.values(SYSTEM_PROVIDER_DEFS)
+  return []
 }
 
 const LOCAL_PROVIDER_CAPABILITY_PREDICATES = {
@@ -176,7 +177,10 @@ export function isLocalProviderConfigCompatibleWithCapability<C extends Provider
   capability: C,
   providerConfig: ProviderConfig,
 ): providerConfig is ProviderConfigForCapability<C> {
-  return getLocalProviderPredicateForCapability(capability)(providerConfig)
+  return (
+    isLocalProviderType(providerConfig.provider) &&
+    getLocalProviderPredicateForCapability(capability)(providerConfig)
+  )
 }
 
 export function getSystemProviderIdsForCapability(capability: ProviderCapability): string[] {

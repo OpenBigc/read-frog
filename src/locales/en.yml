@@ -115,7 +115,6 @@ options:
     product: Product
   tools:
     translationHub: Translation Hub
-    pdfTranslation: PDF translation
   product:
     roadmap: Roadmap
   helpAndCommunity:
@@ -252,7 +251,7 @@ options:
       name:
         builtInAi: Built-in AI
         builtInAiAdvance: Advanced Built-in AI
-        customChatComplete: Custom Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Custom Responses
       attribution:
         builtInAi: Read Frog's hosted standard model. Pro and Ultra members can use it on every feature, on a weekly quota; on the free plan it runs Custom AI Actions only.
@@ -2072,3 +2071,24 @@ languages:
   wls: Wallisian
   rar: Rarotongan
   hif: Fiji Hindi
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

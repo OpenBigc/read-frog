@@ -23,7 +23,7 @@ import { CUSTOM_ACTION_TEMPLATES } from "../custom-action-templates"
 function createFromTemplate(id: string) {
   const template = CUSTOM_ACTION_TEMPLATES.find((candidate) => candidate.id === id)
   if (!template) throw new Error(`missing template ${id}`)
-  return template.createAction("openai-default")
+  return template.createAction("deepseek-default")
 }
 
 // A locale's `blank.prompt` block, its indentation removed. i18n is mocked in
@@ -190,7 +190,7 @@ describe("custom action template layouts", () => {
 
   it("creates schema-valid actions", () => {
     const actions = CUSTOM_ACTION_TEMPLATES.map((template) =>
-      template.createAction("openai-default"),
+      template.createAction("deepseek-default"),
     )
 
     expect(selectionToolbarCustomActionsSchema.safeParse(actions).success).toBe(true)
@@ -206,7 +206,7 @@ describe("custom action template layouts", () => {
       const builtIn = createBuiltIn()
 
       expect(builtIn.id).toBe(actionId)
-      expect(builtIn.providerId).toBe("read-frog-free-ai")
+      expect(builtIn.providerId).toBe("deepseek-default")
       expect(builtIn.systemPrompt).toBe(preset.systemPrompt)
       expect(builtIn.outputSchema.map((field) => field.id)).toEqual(
         preset.outputSchema.map((field) => `default-${field.id}`),

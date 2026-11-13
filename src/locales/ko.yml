@@ -115,7 +115,6 @@ options:
     product: 제품
   tools:
     translationHub: 번역 허브
-    pdfTranslation: PDF 번역
   product:
     roadmap: 로드맵
   helpAndCommunity:
@@ -251,7 +250,7 @@ options:
       name:
         builtInAi: 내장 AI
         builtInAiAdvance: 고급 내장 AI
-        customChatComplete: 사용자 정의 Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: 사용자 정의 Responses
       attribution:
         builtInAi: Read Frog가 호스팅하는 일반 모델입니다. Pro 및 Ultra 사용자는 주간 할당량 안에서 모든 기능에 사용할 수 있으며, 무료 플랜에서는 사용자 지정 AI 작업에서만 사용할 수 있습니다.
@@ -1925,3 +1924,24 @@ languages:
   wls: 월리스어
   rar: 라로통가어
   hif: 피지 힌디어
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

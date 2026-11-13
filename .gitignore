@@ -47,3 +47,5 @@ scripts/output/
 
 reference/
 .gstack/
+
+.tools/

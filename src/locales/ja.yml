@@ -115,7 +115,6 @@ options:
     product: 製品
   tools:
     translationHub: 翻訳ハブ
-    pdfTranslation: PDF 翻訳
   product:
     roadmap: ロードマップ
   helpAndCommunity:
@@ -251,7 +250,7 @@ options:
       name:
         builtInAi: 組み込み AI
         builtInAiAdvance: 高度な組み込み AI
-        customChatComplete: カスタム Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: カスタム Responses
       attribution:
         builtInAi: Read Frog がホストする標準モデル。Pro と Ultra のユーザーは週間クォータの範囲ですべての機能で利用でき、無料プランではカスタム AI アクションでのみ利用できます。
@@ -1925,3 +1924,24 @@ languages:
   wls: ウォリス語
   rar: ラロトンガ語
   hif: フィジー・ヒンディー語
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

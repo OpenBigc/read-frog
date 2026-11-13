@@ -4,12 +4,6 @@ import type { Config } from "@/types/config/config"
 import type { LLMProviderConfig, TranslateProviderConfig } from "@/types/config/provider"
 import type { HostedAiFeature, HostedAiStatus } from "@/utils/hosted-ai/types"
 import { isLLMProviderConfig } from "@/types/config/provider"
-import {
-  getHostedAiCreditForFeature,
-  getHostedAiTierDescription,
-  getHostedAiTierStatus,
-} from "@/utils/hosted-ai/status"
-import { sendMessage } from "@/utils/message"
 import { resolveProviderRefForCapability } from "./provider-registry"
 
 /**
@@ -82,7 +76,6 @@ export function resolvePageTranslationProviderOrNull(
  * served during a later outage even across a real revision bump — accepted:
  * the overlap is rare and the alternative is failing the translation.
  */
-const UNKNOWN_MODEL_REVISION = "unknown"
 
 /**
  * Cache identity for a provider. Local providers hash their whole config, so a
@@ -148,35 +141,13 @@ export function getHostedFeatureForRoute(route: HostedAiTextStreamRoute): Hosted
  * ones that do not (a subtitle run resolves one batch at a time, so it never
  * overlaps itself). Both are needed.
  */
-let inflightStatus: Promise<HostedAiStatus | undefined> | null = null
 
 /**
  * The background owns the response and its cache — content scripts cannot read
  * the session storage it lives in, and one entry there serves every tab.
  */
-export function fetchHostedAiStatus(): Promise<HostedAiStatus | undefined> {
-  if (inflightStatus) {
-    return inflightStatus
-  }
-
-  // Fail open when the status endpoint is unreachable: the generation endpoints
-  // enforce access on their own, so a status-only outage must not block
-  // translation. Only an explicit server verdict blocks, in
-  // `serializeProviderRef`. Both the null verdict and the throw collapse to the
-  // same `undefined` here, and inside the shared promise so every sharer sees it.
-  const pending = (async (): Promise<HostedAiStatus | undefined> => {
-    try {
-      return (await sendMessage("getHostedAiStatus")) ?? undefined
-    } catch {
-      return undefined
-    }
-  })()
-
-  inflightStatus = pending.finally(() => {
-    inflightStatus = null
-  })
-
-  return inflightStatus
+export async function fetchHostedAiStatus(): Promise<HostedAiStatus | undefined> {
+  return undefined
 }
 
 /**
@@ -191,7 +162,7 @@ export function fetchHostedAiStatus(): Promise<HostedAiStatus | undefined> {
  */
 export async function serializeProviderRef(
   provider: ResolvedProviderRef<LLMProviderConfig>,
-  route: HostedAiTextStreamRoute,
+  _route: HostedAiTextStreamRoute,
 ): Promise<PromptableProviderRef>
 export async function serializeProviderRef(
   provider: ResolvedProviderRef<TranslateProviderConfig>,
@@ -199,31 +170,13 @@ export async function serializeProviderRef(
 ): Promise<SerializableProviderRef>
 export async function serializeProviderRef(
   provider: ResolvedProviderRef<TranslateProviderConfig>,
-  route: HostedAiTextStreamRoute,
+  _route: HostedAiTextStreamRoute,
 ): Promise<SerializableProviderRef> {
-  const feature = getHostedFeatureForRoute(route)
   if (provider.kind === "local") {
     return { kind: "local", config: provider.config }
   }
 
-  const status = await fetchHostedAiStatus()
-
-  const tierStatus = getHostedAiTierStatus(status, feature, provider.modelTier)
-  if (tierStatus && !tierStatus.available) {
-    throw new HostedAiProviderUnavailableError(
-      provider,
-      getHostedAiTierDescription(tierStatus, {
-        credit: getHostedAiCreditForFeature(status, feature),
-      }) ?? "Built-in AI is unavailable",
-    )
-  }
-
-  return {
-    kind: "system",
-    providerId: provider.id,
-    modelTier: provider.modelTier,
-    modelRevision: tierStatus?.modelRevision ?? UNKNOWN_MODEL_REVISION,
-  }
+  throw new Error("Built-in AI has been removed")
 }
 
 export type ProviderAvailability<Ref extends SerializableProviderRef = SerializableProviderRef> =

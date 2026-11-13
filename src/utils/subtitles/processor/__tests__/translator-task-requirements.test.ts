@@ -47,23 +47,13 @@ describe("subtitles task requirements", () => {
     }))
   })
 
-  it("resolves a translate-only provider for line translation but not for generation tasks", async () => {
+  it("rejects a removed translate-only provider for every subtitle task", async () => {
     const { resolveSubtitlesProvider } = await import("../translator")
-    const config = configWithProvider(GOOGLE) as never
-
-    // The picker legally admits Google for videoSubtitles…
-    await expect(resolveSubtitlesProvider(config, "lineTranslation")).resolves.toEqual({
-      status: "ok",
-      ref: { kind: "local", config: GOOGLE },
-    })
-    // …but a summary or a recut is a generation, and the resolution reports
-    // that as its own state — with no ref a caller could misuse.
-    await expect(resolveSubtitlesProvider(config, "summary")).resolves.toEqual({
-      status: "notPromptable",
-    })
-    await expect(resolveSubtitlesProvider(config, "segmentation")).resolves.toEqual({
-      status: "notPromptable",
-    })
+    for (const task of ["lineTranslation", "summary", "segmentation"] as const) {
+      await expect(
+        resolveSubtitlesProvider(configWithProvider(GOOGLE) as never, task),
+      ).resolves.toEqual({ status: "none" })
+    }
   })
 
   it("keeps notPromptable distinct from having no provider at all", async () => {
@@ -96,7 +86,7 @@ describe("subtitles task requirements", () => {
       ...configWithProvider(GOOGLE),
       pageTranslation: { ...DEFAULT_CONFIG.pageTranslation, enableAIContentAware: true },
     } as never
-    const sessionRef = { kind: "local" as const, config: DEFAULT_PROVIDER_CONFIG.openai }
+    const sessionRef = { kind: "local" as const, config: DEFAULT_PROVIDER_CONFIG.deepseek }
     sendMessageMock.mockResolvedValue("a summary")
 
     const summary = await fetchSubtitlesSummary(

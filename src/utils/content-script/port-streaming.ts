@@ -112,7 +112,10 @@ export function createPortStreamPromise<TResponse = string>(
     }
 
     disconnectListener = () => {
-      finalize(() => reject(new Error(STREAM_PORT_DISCONNECTED_MESSAGE)))
+      // Chrome only exposes this error during onDisconnect. Reading it also
+      // prevents an unchecked runtime.lastError entry in the extension log.
+      const error = browser.runtime.lastError
+      finalize(() => reject(new Error(error?.message || STREAM_PORT_DISCONNECTED_MESSAGE)))
     }
 
     abortListener = () => {

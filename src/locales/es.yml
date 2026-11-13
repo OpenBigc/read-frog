@@ -115,7 +115,6 @@ options:
     product: Producto
   tools:
     translationHub: Centro de traducción
-    pdfTranslation: Traducción de PDF
   product:
     roadmap: Hoja de ruta
   helpAndCommunity:
@@ -252,7 +251,7 @@ options:
       name:
         builtInAi: IA integrada
         builtInAiAdvance: IA integrada avanzada
-        customChatComplete: Personalizado Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Personalizado Responses
       attribution:
         builtInAi: Modelo estándar alojado por Read Frog. Los usuarios Pro y Ultra pueden usarlo en todas las funciones con una cuota semanal; en el plan gratuito solo funciona en las acciones de IA personalizadas.
@@ -1930,3 +1929,24 @@ languages:
   wls: Wallisiano
   rar: Rarotongano
   hif: Hindi de Fiyi
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

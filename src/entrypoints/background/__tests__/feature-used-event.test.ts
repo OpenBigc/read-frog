@@ -86,35 +86,12 @@ describe("setupFeatureUsedEventHandlers", () => {
     })
 
     expect(recordFeatureActiveDayMock).not.toHaveBeenCalled()
-    expect(captureMock).toHaveBeenCalledTimes(1)
+    expect(captureMock).not.toHaveBeenCalled()
   })
 
-  it("still reports a failure to analytics", async () => {
+  it("does not report page or account data to official analytics", async () => {
+    await send("success", "https://example.com/private")
     await send("failure")
-    expect(captureMock).toHaveBeenCalledWith({ ...BASE_EVENT, outcome: "failure" }, undefined)
-  })
-
-  it("fans the same event out to both consumers", async () => {
-    await send("success")
-    expect(recordFeatureActiveDayMock).toHaveBeenCalledTimes(1)
-    expect(captureMock).toHaveBeenCalledWith({ ...BASE_EVENT, outcome: "success" }, undefined)
-  })
-
-  it("does not wait on the active-day write before reporting to analytics", async () => {
-    // A write that never settles stands in for a slow one. If the handler awaited it
-    // instead of firing and forgetting, this send would hang and the test would time out.
-    recordFeatureActiveDayMock.mockReturnValue(new Promise<void>(() => {}))
-
-    await send("success")
-
-    expect(captureMock).toHaveBeenCalledTimes(1)
-  })
-
-  it("hands the sender tab to analytics without interpreting it", async () => {
-    await send("success", "https://mail.google.com/mail/u/0/#inbox/abc?x=1")
-    expect(captureMock).toHaveBeenCalledWith(
-      { ...BASE_EVENT, outcome: "success" },
-      { id: 42, url: "https://mail.google.com/mail/u/0/#inbox/abc?x=1" },
-    )
+    expect(captureMock).not.toHaveBeenCalled()
   })
 })

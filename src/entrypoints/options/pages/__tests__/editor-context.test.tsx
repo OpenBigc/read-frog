@@ -164,7 +164,7 @@ describe("editor compound component contexts", () => {
     const store = createConfigStore()
     const config = structuredClone(store.get(configAtom))
     const providerConfig = config.providersConfig.find(
-      (provider) => provider.id === "openai-default",
+      (provider) => provider.id === "deepseek-default",
     )
     if (!providerConfig || !isAPIProviderConfig(providerConfig)) {
       throw new Error("Expected the default OpenAI provider")

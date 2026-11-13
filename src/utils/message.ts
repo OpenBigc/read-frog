@@ -1,5 +1,6 @@
 import type { LangCodeISO6393 } from "@read-frog/definitions"
 import type { GuideDictionaryNotebaseCompletionInput } from "./guide/dictionary-notebase"
+import type { LocalNote, NewLocalNote } from "./local-notes/types"
 import type { FeatureUsageContext, FeatureUsedEventProperties } from "@/types/analytics"
 import type {
   BackgroundGenerateTextPayload,
@@ -27,6 +28,11 @@ import type { EdgeTTSVoice } from "@/utils/server/edge-tts/types"
 import { defineExtensionMessaging } from "@webext-core/messaging"
 
 interface ProtocolMap {
+  listLocalNotes: () => Promise<LocalNote[]>
+  createLocalNotes: (data: NewLocalNote[]) => Promise<LocalNote[]>
+  updateLocalNote: (data: Pick<LocalNote, "id" | "title" | "content">) => Promise<void>
+  deleteLocalNote: (data: { id: string }) => Promise<void>
+  importLocalNotes: (data: unknown) => Promise<number>
   // navigation
   openPage: (data: { url: string; active?: boolean }) => void
   openOptionsPage: (data?: { route?: `/${string}` }) => void

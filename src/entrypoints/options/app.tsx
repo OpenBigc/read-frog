@@ -5,6 +5,10 @@ import { ROUTE_DEFS } from "./app-sidebar/nav-items"
 
 type RoutePath = (typeof ROUTE_DEFS)[number]["path"]
 
+const LocalNotesPage = lazy(() =>
+  import("./pages/local-notes").then((module) => ({ default: module.LocalNotesPage })),
+)
+
 const PreferencePage = lazy(() =>
   import("./pages/preference").then((module) => ({ default: module.PreferencePage })),
 )
@@ -127,6 +131,7 @@ const SubtitlesQueuePage = lazy(() =>
 
 const ROUTE_COMPONENTS: Record<RoutePath, ComponentType> = {
   "/": ApiProvidersPage,
+  "/notes": LocalNotesPage,
   "/preference": PreferencePage,
   "/shortcuts": ShortcutsPage,
   "/api-providers": ApiProvidersPage,

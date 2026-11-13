@@ -19,7 +19,7 @@ describe("config utilities", () => {
 
     it("should remove apiKey from OpenAI provider config", () => {
       const openaiConfigFromConstants = DEFAULT_PROVIDER_CONFIG_LIST.find(
-        (config) => config.provider === "openai",
+        (config) => config.provider === "deepseek",
       )!
       const openaiConfigWithApiKey = {
         ...openaiConfigFromConstants,
@@ -30,7 +30,7 @@ describe("config utilities", () => {
 
       expect(result).not.toHaveProperty("apiKey")
       expect(result.name).toBe(openaiConfigFromConstants.name)
-      expect(result.provider).toBe("openai")
+      expect(result.provider).toBe("deepseek")
       expect(result.model).toEqual(openaiConfigFromConstants.model)
       expect(hasAPIKey(result)).toBe(false)
     })

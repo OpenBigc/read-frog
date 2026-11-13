@@ -9,7 +9,6 @@ import type {
   ProviderSponsorConfig,
 } from "@/types/config/provider"
 import type { Theme } from "@/types/config/theme"
-import { APP_NAME } from "@read-frog/definitions"
 import { camelCase } from "case-anything"
 import customProviderLogo from "@/assets/providers/custom-provider.svg?url&no-inline"
 import customResponsesLogo from "@/assets/providers/custom-responses.svg?url&no-inline"
@@ -33,6 +32,8 @@ import {
 import { omit, pick } from "@/types/utils"
 import { i18n } from "@/utils/i18n"
 import { getLobeIconsCDNUrlFn } from "../logo"
+
+export { LOCAL_PROVIDER_TYPES } from "./local-providers"
 
 export const DEFAULT_LLM_PROVIDER_MODELS: LLMProviderModels = {
   openrouter: {
@@ -220,25 +221,18 @@ export const PROVIDER_ITEMS: Record<
   jalapenocloud: {
     logo: () => jalapenoCloudLogo,
     name: "Jalapeno Cloud",
-    website: "https://www.jalapeno-cloud.ai/readfrog",
-    apiKeyUrl: "https://www.jalapeno-cloud.ai/readfrog",
-    sponsor: {
-      sponsoring: true,
-      referUrl: "https://www.jalapeno-cloud.ai/readfrog",
-      // Both default to the generic sponsor wording; Jalapeno names its actual offer instead.
-      badgeI18nKey: "options.apiProviders.badges.sponsorJalapenoCloud",
-      ctaI18nKey: "options.apiProviders.sponsorCtaJalapenoCloud",
-    },
+    website: "https://www.jalapeno-cloud.ai",
+    apiKeyUrl: "https://www.jalapeno-cloud.ai",
   },
   atlascloud: {
     logo: getLobeIconsCDNUrlFn("atlascloud"),
     name: "Atlas Cloud",
-    website: "https://readfrog.s.gy/altas",
-    apiKeyUrl: "https://readfrog.s.gy/altas",
+    website: "https://www.atlascloud.ai",
+    apiKeyUrl: "https://www.atlascloud.ai",
   },
   "openai-compatible": {
     logo: () => customProviderLogo,
-    name: "Custom Chat Complete",
+    name: "OpenAI Compatible",
     website: `${env.WXT_WEBSITE_URL}/docs/providers/openai-compatible-providers`,
   },
   "open-responses": {
@@ -344,7 +338,7 @@ export const PROVIDER_ITEMS: Record<
   tensdaq: {
     logo: () => tensdaqLogoColor,
     name: "Tensdaq",
-    website: "https://dashboard.x-aio.com/zh/register?ref=c356c1daba9a4641a18e",
+    website: "https://dashboard.x-aio.com",
   },
   ollama: {
     logo: getLobeIconsCDNUrlFn("ollama"),
@@ -647,22 +641,7 @@ export const MICROSOFT_TRANSLATE_PROVIDER_ID = DEFAULT_PROVIDER_CONFIG["microsof
  * starts out with belongs in `DEFAULT_PROVIDER_CONFIG[provider].headers` instead, where the user
  * owns it.
  */
-export const FORCED_PROVIDER_HEADERS: Partial<Record<LLMProviderTypes, Record<string, string>>> = {
-  jalapenocloud: {
-    "HTTP-Referer": env.WXT_WEBSITE_URL,
-    "X-Jalapeno-Title": APP_NAME,
-  },
-  openrouter: {
-    "HTTP-Referer": env.WXT_WEBSITE_URL,
-    "X-OpenRouter-Title": APP_NAME,
-  },
-  // Anthropic's API refuses direct browser calls without this, so it is not a default the user
-  // can outgrow — it used to sit with the editable ones, where adding any header of your own
-  // dropped it and broke every request.
-  anthropic: {
-    "anthropic-dangerous-direct-browser-access": "true",
-  },
-}
+export const FORCED_PROVIDER_HEADERS: Partial<Record<LLMProviderTypes, Record<string, string>>> = {}
 
 export const PROVIDER_URL_PLACEHOLDERS: Partial<Record<APIProviderTypes, string>> = {
   jalapenocloud: DEFAULT_PROVIDER_CONFIG.jalapenocloud.baseURL,
@@ -698,10 +677,7 @@ export const PROVIDER_URL_PLACEHOLDERS: Partial<Record<APIProviderTypes, string>
 }
 
 export const DEFAULT_PROVIDER_CONFIG_LIST: ProvidersConfig = [
-  DEFAULT_PROVIDER_CONFIG["google-translate"],
-  DEFAULT_PROVIDER_CONFIG["microsoft-translate"],
-  DEFAULT_PROVIDER_CONFIG.openai,
-  DEFAULT_PROVIDER_CONFIG.jalapenocloud,
+  DEFAULT_PROVIDER_CONFIG["openai-compatible"],
   DEFAULT_PROVIDER_CONFIG.deepseek,
 ]
 

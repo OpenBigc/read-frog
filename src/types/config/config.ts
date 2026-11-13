@@ -1,5 +1,6 @@
 import { langCodeISO6393Schema, langLevel } from "@read-frog/definitions"
 import { z } from "zod"
+import { normalizeLocalEditionConfig } from "@/utils/config/local-edition"
 import {
   BUILT_IN_ACTION_IDS,
   BUILT_IN_ACTION_KEYS,
@@ -174,7 +175,7 @@ const uiLanguageSchema = z
 export type UiLanguage = z.infer<typeof uiLanguageSchema>
 
 // Complete config schema
-export const configSchema = z
+const fullConfigSchema = z
   .object({
     language: languageSchema,
     providersConfig: providersConfigSchema,
@@ -276,5 +277,7 @@ export const configSchema = z
       }
     })
   })
+
+export const configSchema = z.preprocess(normalizeLocalEditionConfig, fullConfigSchema)
 
 export type Config = z.infer<typeof configSchema>

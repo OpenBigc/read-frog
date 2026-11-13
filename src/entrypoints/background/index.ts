@@ -1,9 +1,7 @@
 import "@/utils/zod-config"
 import type { Config, UiLanguage } from "@/types/config/config"
 import { browser, defineBackground } from "#imports"
-import { env } from "@/env"
 import { storageAdapter } from "@/utils/atoms/storage-adapter"
-import { selectFreshTranslateProviders } from "@/utils/config/default-translate-provider"
 import { CONFIG_STORAGE_KEY } from "@/utils/constants/config"
 import { initI18n, setUiLanguage } from "@/utils/i18n"
 import { ensureInstalledAtRecorded } from "@/utils/install-time"
@@ -14,7 +12,7 @@ import { SessionCacheGroupRegistry } from "@/utils/session-cache/session-cache-g
 import { runAiSegmentSubtitles } from "./ai-segmentation"
 import { dispatchBackgroundStreamPort } from "./background-stream"
 import { initializeActionIcons, registerActionIconListeners } from "./browser-action-icon"
-import { ensureInitializedConfig, isFreshInstalledConfig } from "./config"
+import { ensureInitializedConfig } from "./config"
 import { setUpConfigBackup } from "./config-backup"
 import { initializeContextMenu, registerContextMenuListeners } from "./context-menu"
 import {
@@ -26,19 +24,16 @@ import {
 import { setupEdgeTTSMessageHandlers } from "./edge-tts"
 import { setupFeatureUsedEventHandlers } from "./feature-used-event"
 import { setupGlossaryMessageHandlers } from "./glossary"
-import { setupHostedAiStatusHandler } from "./hosted-ai-status"
 import { setupIframeInjection } from "./iframe-injection"
 import { setupLLMGenerateTextMessageHandlers } from "./llm-generate-text"
+import { setupLocalNotesHandlers } from "./local-notes"
 import { initMockData } from "./mock-data"
-import { newUserGuide } from "./new-user-guide"
-import { setupNotebasePendingSaveProcessor } from "./notebase-pending-save"
 import { setupPageTranslationHandlers } from "./page-translation"
 import { proxyFetch } from "./proxy-fetch"
 import { setupSidePanelMessageHandler } from "./side-panel"
 import { setupSubtitlesTranslationHandlers } from "./subtitles-translation"
 import { translationMessage } from "./translation-signal"
 import { setupTTSPlaybackMessageHandlers } from "./tts-playback"
-import { setupUninstallSurvey } from "./uninstall-survey"
 import { setupVideoSummaryHandlers } from "./video-summary"
 
 export default defineBackground({
@@ -53,25 +48,6 @@ export default defineBackground({
       await ensureInstalledAtRecorded()
 
       await ensureInitializedConfig()
-
-      // Open tutorial page when extension is installed. `from=install` tells
-      // fresh installs apart from other visits in the website's guide analytics.
-      if (details.reason === "install") {
-        await browser.tabs.create({
-          url: `${env.WXT_WEBSITE_URL}/guide/step-1?from=install`,
-        })
-      }
-
-      // Deliberately last: probing Google Translate can hang for seconds on networks that
-      // block it, and nothing above should wait for that. Awaiting inside the listener
-      // keeps the service worker alive until the probe settles. Guarded by the config
-      // actually being new rather than by the install reason: reloading an unpacked
-      // extension reports "install" while the developer's provider choice is still in
-      // storage, and a config rebuilt from defaults after failing validation during an
-      // update deserves the same provider selection a fresh install gets.
-      if (await isFreshInstalledConfig()) {
-        await selectFreshTranslateProviders()
-      }
 
       // Clear blog cache on extension update to fetch latest blog posts
       if (details.reason === "update") {
@@ -119,7 +95,6 @@ export default defineBackground({
       await cleanupAllAiSegmentationCache()
     })
 
-    newUserGuide()
     setupFeatureUsedEventHandlers()
     translationMessage()
     registerActionIconListeners()
@@ -150,9 +125,8 @@ export default defineBackground({
     })()
 
     proxyFetch()
-    setupHostedAiStatusHandler()
+    setupLocalNotesHandlers()
     setupGlossaryMessageHandlers()
-    setupNotebasePendingSaveProcessor(() => backgroundReady)
     setupEdgeTTSMessageHandlers()
     setupLLMGenerateTextMessageHandlers()
     setupTTSPlaybackMessageHandlers()
@@ -168,7 +142,6 @@ export default defineBackground({
     void (async () => {
       await backgroundReady
       void initializeContextMenu()
-      await setupUninstallSurvey()
     })()
 
     // Keep background-resolved strings in the selected language when it changes.
@@ -181,7 +154,6 @@ export default defineBackground({
         if (newConfig.uiLanguage === currentUiLanguage) return
         currentUiLanguage = newConfig.uiLanguage
         await setUiLanguage(newConfig.uiLanguage)
-        await setupUninstallSurvey()
       })()
     })
   },

@@ -4,7 +4,6 @@ import { use, useState } from "react"
 import { customActionRequestAtom } from "@/components/custom-action/atoms"
 import { CustomActionPanel } from "@/components/custom-action/custom-action-panel"
 import { isSaveToNotebaseDialogOpenAtom } from "@/components/custom-action/save-to-notebase-dialog-atom"
-import { SaveToNotebaseDialogHost } from "@/components/custom-action/save-to-notebase-dialog-host"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { SelectionPopover } from "@/components/ui/selection-popover"
 import { SUBTITLES_BOX_CLASS } from "@/utils/constants/subtitles"
@@ -106,7 +105,6 @@ export function WordLookupCard() {
             <CustomActionPanel />
           </SelectionPopover.Content>
         </SelectionPopover.Root>
-        {active && <SaveToNotebaseDialogHost />}
       </ThemeProvider>
     </ShadowWrapperContext>
   )

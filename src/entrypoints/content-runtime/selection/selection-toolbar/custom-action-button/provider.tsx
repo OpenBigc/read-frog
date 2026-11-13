@@ -6,7 +6,6 @@ import { createContext, use, useCallback, useEffect, useMemo, useRef, useState }
 import { customActionRequestAtom } from "@/components/custom-action/atoms"
 import { CustomActionPanel } from "@/components/custom-action/custom-action-panel"
 import { isSaveToNotebaseDialogOpenAtom } from "@/components/custom-action/save-to-notebase-dialog-atom"
-import { SaveToNotebaseDialogHost } from "@/components/custom-action/save-to-notebase-dialog-host"
 import { toastManager } from "@/components/ui/base-ui/toast"
 import { SelectionPopover } from "@/components/ui/selection-popover"
 import { createSelectionToolbarPrecheckError } from "@/components/ui/selection-popover/inline-error"
@@ -280,7 +279,6 @@ export function SelectionCustomActionProvider({ children }: { children: ReactNod
           <CustomActionPanel />
         </SelectionPopover.Content>
       </SelectionPopover.Root>
-      <SaveToNotebaseDialogHost />
     </SelectionCustomActionContext>
   )
 }

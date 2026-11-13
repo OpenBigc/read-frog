@@ -2,8 +2,9 @@ import { HostedAiOutputFieldTypeSchema } from "@read-frog/api-contract"
 import { langCodeISO6393Schema } from "@read-frog/definitions"
 import { z } from "zod"
 import { isBuiltInActionId } from "@/utils/constants/custom-action"
-import { BUILT_IN_AI_PROVIDER_ID } from "@/utils/constants/provider-ids"
 import { shortcutSchema } from "./shortcut"
+
+const DEFAULT_LOCAL_AI_PROVIDER_ID = "deepseek-default"
 
 // Upper bound (UTF-16 code units) of a custom action's HTML layout. NEVER lower
 // it: an older build that reads a config holding a longer layout fails schema
@@ -85,14 +86,14 @@ export const selectionToolbarBuiltInActionsSchema = z.object({
   // falling back to DEFAULT_CONFIG and writing that over the user's settings.
   sentenceAnalysis: selectionToolbarBuiltInActionStateSchema.default(() => ({
     enabled: true,
-    providerId: BUILT_IN_AI_PROVIDER_ID,
+    providerId: DEFAULT_LOCAL_AI_PROVIDER_ID,
   })),
   // For the same reason as above. Off: a config stored before v105 has not
   // been through v106 either, which turns it on and unpins it, so it must not
   // land on the toolbar in the meantime.
   improveWriting: selectionToolbarBuiltInActionStateSchema.default(() => ({
     enabled: false,
-    providerId: BUILT_IN_AI_PROVIDER_ID,
+    providerId: DEFAULT_LOCAL_AI_PROVIDER_ID,
   })),
 })
 

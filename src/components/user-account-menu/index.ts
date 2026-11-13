@@ -1,2 +1,6 @@
-export { UserAccountMenuPopup } from "./popup"
-export { UserAccountMenuSidebar } from "./sidebar"
+export function UserAccountMenuPopup() {
+  return null
+}
+export function UserAccountMenuSidebar() {
+  return null
+}

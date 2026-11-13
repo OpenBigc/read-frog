@@ -1,7 +1,6 @@
-import type { OpenAIResponsesProviderOptions } from "@ai-sdk/openai"
 import type { JSONValue } from "ai"
 
-type OpenAIReasoningEffort = Exclude<OpenAIResponsesProviderOptions["reasoningEffort"], undefined>
+type OpenAIReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max"
 
 interface OpenAIGPT5ReasoningEffortPolicy {
   pattern: RegExp

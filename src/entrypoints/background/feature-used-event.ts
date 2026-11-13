@@ -1,6 +1,5 @@
 import { recordFeatureActiveDay } from "@/utils/feature-active-days"
 import { onMessage } from "@/utils/message"
-import { captureFeatureUsedEventInBackground } from "./analytics"
 
 /**
  * Sole subscriber to the feature-used event, fanning it out to the two consumers that
@@ -26,6 +25,5 @@ export function setupFeatureUsedEventHandlers(): void {
 
     // The sender's top-level tab, not anything from the payload, identifies the page:
     // it reflects the site the user is on even when the feature ran in an iframe.
-    await captureFeatureUsedEventInBackground(message.data, message.sender?.tab)
   })
 }

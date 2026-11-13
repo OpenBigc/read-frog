@@ -115,7 +115,6 @@ options:
     product: Sản phẩm
   tools:
     translationHub: Trung tâm Dịch thuật
-    pdfTranslation: Dịch PDF
   product:
     roadmap: Lộ trình
   helpAndCommunity:
@@ -251,7 +250,7 @@ options:
       name:
         builtInAi: AI tích hợp
         builtInAiAdvance: AI tích hợp nâng cao
-        customChatComplete: Tùy chỉnh Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Tùy chỉnh Responses
       attribution:
         builtInAi: Mô hình tiêu chuẩn do Read Frog lưu trữ. Người dùng Pro và Ultra dùng được ở mọi tính năng trong hạn mức tuần; ở gói miễn phí chỉ dùng được trong hành động AI tùy chỉnh.
@@ -1925,3 +1924,24 @@ languages:
   wls: Tiếng Wallis
   rar: Tiếng Rarotongan
   hif: Tiếng Hindi Fiji
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

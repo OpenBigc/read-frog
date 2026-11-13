@@ -115,7 +115,6 @@ options:
     product: 产品
   tools:
     translationHub: 翻译中心
-    pdfTranslation: PDF 翻译
   product:
     roadmap: 路线图
   helpAndCommunity:
@@ -252,7 +251,7 @@ options:
       name:
         builtInAi: 内置 AI
         builtInAiAdvance: 高级内置 AI
-        customChatComplete: 自定义 Chat Complete
+        customChatComplete: OpenAI 兼容
         customResponses: 自定义 Responses
       attribution:
         builtInAi: 由 Read Frog 托管的普通模型。Pro 和 Ultra 用户可在全部功能上使用，消耗每周额度；免费用户仅支持在自定义 AI 指令使用。
@@ -1935,3 +1934,24 @@ languages:
   wls: 瓦利斯语
   rar: 拉罗汤加语
   hif: 斐济印地语
+
+localNotes:
+  title: "笔记"
+  save: "保存"
+  saved: "已保存"
+  new: "新建笔记"
+  untitled: "未命名"
+  import: "导入"
+  export: "导出"
+  imported: "已导入"
+  search: "搜索笔记"
+  empty: "暂无笔记"
+  loading: "加载中…"
+  retry: "重试"
+  failed: "操作失败"
+  noteTitle: "标题"
+  content: "内容"
+  delete: "删除"
+  source: "来源"
+  confirmDelete: "删除这条笔记？"
+  discard: "放弃未保存的修改？"

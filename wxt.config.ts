@@ -48,7 +48,7 @@ export default defineConfig({
       }),
     permissions: [
       "storage",
-      // The glossary is the only user-authored, non-regenerable data the
+      // The glossary and local notes are user-authored, non-regenerable data the
       // extension stores locally. Without this, IndexedDB is "best-effort" and
       // the browser may evict it under disk pressure — fine for the translation
       // caches, data loss for a term list the user typed by hand. It also lifts
@@ -56,9 +56,7 @@ export default defineConfig({
       "unlimitedStorage",
       "tabs",
       "alarms",
-      "cookies",
       "contextMenus",
-      "identity",
       "scripting",
       "webNavigation",
       ...(browser !== "firefox" ? ["offscreen", "sidePanel"] : []),

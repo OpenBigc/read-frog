@@ -115,7 +115,6 @@ options:
     product: Məhsul
   tools:
     translationHub: Tərcümə mərkəzi
-    pdfTranslation: PDF tərcüməsi
   product:
     roadmap: İnkişaf planı
   helpAndCommunity:
@@ -252,7 +251,7 @@ options:
       name:
         builtInAi: Daxili süni intellekt
         builtInAiAdvance: Təkmil daxili süni intellekt
-        customChatComplete: Fərdi Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Fərdi Responses
       attribution:
         builtInAi: Read Frog serverlərində işləyən standart model. Pro və Ultra üzvləri ondan həftəlik kvota ilə bütün funksiyalarda istifadə edə bilər; pulsuz planda isə yalnız fərdi süni intellekt əməliyyatlarında işləyir.
@@ -1923,3 +1922,24 @@ languages:
   wls: Uollis dili
   rar: Rarotonqa dili
   hif: Fici hindi dili
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

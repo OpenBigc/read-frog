@@ -115,7 +115,6 @@ options:
     product: Ürün
   tools:
     translationHub: Çeviri Merkezi
-    pdfTranslation: PDF çevirisi
   product:
     roadmap: Yol Haritası
   helpAndCommunity:
@@ -251,7 +250,7 @@ options:
       name:
         builtInAi: Yerleşik AI
         builtInAiAdvance: Gelişmiş yerleşik AI
-        customChatComplete: Özel Chat Complete
+        customChatComplete: OpenAI Compatible
         customResponses: Özel Responses
       attribution:
         builtInAi: Read Frog tarafından barındırılan standart model. Pro ve Ultra kullanıcıları haftalık kotayla tüm özelliklerde kullanabilir; ücretsiz planda yalnızca özel AI eylemlerinde kullanılabilir.
@@ -1925,3 +1924,24 @@ languages:
   wls: Wallis Dili
   rar: Rarotongan
   hif: Fiji Hintçesi
+
+localNotes:
+  title: "Notes"
+  save: "Save"
+  saved: "Saved"
+  new: "New note"
+  untitled: "Untitled"
+  import: "Import"
+  export: "Export"
+  imported: "Imported"
+  search: "Search notes"
+  empty: "No notes"
+  loading: "Loading…"
+  retry: "Retry"
+  failed: "Operation failed"
+  noteTitle: "Title"
+  content: "Content"
+  delete: "Delete"
+  source: "Source"
+  confirmDelete: "Delete this note?"
+  discard: "Discard unsaved changes?"

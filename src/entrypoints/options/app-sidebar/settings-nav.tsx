@@ -20,6 +20,16 @@ export function SettingsNav() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
+              render={<Link to="/notes" />}
+              isActive={pathname === "/notes"}
+              tooltip={i18n.t("localNotes.title" as never)}
+            >
+              <Icon icon="tabler:notebook" />
+              <span>{i18n.t("localNotes.title" as never)}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
               render={<Link to="/api-providers" />}
               isActive={pathname === "/api-providers" || pathname === "/"}
               tooltip={i18n.t("options.apiProviders.title")}

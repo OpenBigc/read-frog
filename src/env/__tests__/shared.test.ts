@@ -135,16 +135,10 @@ describe("extension env parsing", () => {
     ).toThrowError("must not include leading or trailing whitespace")
   })
 
-  it("requires Google and PostHog env vars when PROD is true", () => {
-    expect(() =>
-      parseResolvedExtensionEnv(
-        {
-          WXT_GOOGLE_CLIENT_ID: "test-google-client-id",
-          WXT_POSTHOG_HOST: "https://us.i.posthog.com",
-        },
-        true,
-      ),
-    ).toThrowError("expected string, received undefined")
+  it("builds the local edition without official account or telemetry credentials", () => {
+    const env = parseResolvedExtensionEnv({}, true)
+    expect(env.WXT_GOOGLE_CLIENT_ID).toBeUndefined()
+    expect(env.WXT_POSTHOG_API_KEY).toBeUndefined()
   })
 
   it("accepts Google and PostHog env vars when PROD is true", () => {

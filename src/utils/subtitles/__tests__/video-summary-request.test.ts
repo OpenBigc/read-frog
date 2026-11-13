@@ -14,7 +14,7 @@ const { sendMessageMock } = vi.hoisted(() => ({
 }))
 vi.mock("@/utils/message", () => ({ sendMessage: sendMessageMock }))
 
-const provider = { ...DEFAULT_PROVIDER_CONFIG.openai, temperature: 0.3 }
+const provider = { ...DEFAULT_PROVIDER_CONFIG.deepseek, temperature: 0.3 }
 const config: Config = {
   ...DEFAULT_CONFIG,
   language: { ...DEFAULT_CONFIG.language, targetCode: "eng" },

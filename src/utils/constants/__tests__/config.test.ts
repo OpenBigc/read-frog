@@ -70,29 +70,16 @@ describe("dEFAULT_CONFIG", () => {
     // order, and landing page translation on Microsoft is illegal in translationOnly mode
     // (see DEFAULT_PROVIDER_CONFIG_LIST).
     expect(DEFAULT_CONFIG.providersConfig.map((provider) => provider.id)).toEqual([
-      "google-translate-default",
-      "microsoft-translate-default",
-      "openai-default",
-      "jalapenocloud-default",
+      "openai-compatible-default",
       "deepseek-default",
     ])
-    expect(DEFAULT_CONFIG.pageTranslation.providerId).toBe("microsoft-translate-default")
-    expect(DEFAULT_CONFIG.selectionToolbar.features.translate.providerId).toBe(
-      "microsoft-translate-default",
-    )
-    expect(DEFAULT_CONFIG.inputTranslation.providerId).toBe("microsoft-translate-default")
-    expect(DEFAULT_CONFIG.videoSubtitles.providerId).toBe("microsoft-translate-default")
+    expect(DEFAULT_CONFIG.pageTranslation.providerId).toBe("deepseek-default")
+    expect(DEFAULT_CONFIG.selectionToolbar.features.translate.providerId).toBe("deepseek-default")
+    expect(DEFAULT_CONFIG.inputTranslation.providerId).toBe("deepseek-default")
+    expect(DEFAULT_CONFIG.videoSubtitles.providerId).toBe("deepseek-default")
     expect(
       DEFAULT_CONFIG.providersConfig.find((provider) => provider.id === "jalapenocloud-default"),
-    ).toEqual(
-      expect.objectContaining({
-        model: {
-          model: "GLM-5.2",
-          isCustomModel: false,
-          customModel: null,
-        },
-      }),
-    )
+    ).toBeUndefined()
     expect(
       DEFAULT_CONFIG.providersConfig.find((provider) => provider.id === "deepseek-default"),
     ).toEqual(
@@ -144,7 +131,7 @@ describe("dEFAULT_CONFIG", () => {
     )
     expect(config.selectionToolbar.builtInActions.dictionary).toEqual({
       enabled: true,
-      providerId: "read-frog-free-ai",
+      providerId: "deepseek-default",
     })
     expect(config.selectionToolbar.customActions).toEqual([])
     expect(createDefaultDictionaryAction()).toEqual(

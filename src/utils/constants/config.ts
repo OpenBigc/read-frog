@@ -11,7 +11,6 @@ import {
   buildImproveWritingActionLayout,
   buildSentenceAnalysisActionLayout,
 } from "@/utils/layout-host/slots"
-import { BUILT_IN_AI_PROVIDER_ID } from "@/utils/providers/provider-registry"
 import {
   BUILT_IN_ACTION_DEFAULT_SHORTCUTS,
   BUILT_IN_ACTION_IDS,
@@ -34,7 +33,6 @@ import {
   buildDefaultProviderConfigList,
   DEFAULT_PROVIDER_CONFIG,
   DEFAULT_PROVIDER_CONFIG_LIST,
-  MICROSOFT_TRANSLATE_PROVIDER_ID,
 } from "./providers"
 import {
   DEFAULT_SELECTION_OVERLAY_OPACITY,
@@ -106,7 +104,7 @@ const getBuiltInImproveWritingLayout = memoizeBuiltInLayout(buildImproveWritingA
  * (never persisted), so it always follows the current locale's field names.
  */
 export function createDefaultDictionaryAction(): SelectionToolbarCustomAction {
-  const action = createDictionaryDefinition(BUILT_IN_AI_PROVIDER_ID)
+  const action = createDictionaryDefinition(DEFAULT_PROVIDER_CONFIG.deepseek.id)
   const outputSchema = action.outputSchema.map((field) => ({
     ...field,
     id: field.id.startsWith("dictionary-")
@@ -130,7 +128,7 @@ export function createDefaultDictionaryAction(): SelectionToolbarCustomAction {
  * enabled/provider/Notebase state persisted.
  */
 export function createDefaultSentenceAnalysisAction(): SelectionToolbarCustomAction {
-  const action = createSentenceAnalysisDefinition(BUILT_IN_AI_PROVIDER_ID)
+  const action = createSentenceAnalysisDefinition(DEFAULT_PROVIDER_CONFIG.deepseek.id)
   const outputSchema = action.outputSchema.map((field) => ({
     ...field,
     id: `default-${field.id}`,
@@ -150,7 +148,7 @@ export function createDefaultSentenceAnalysisAction(): SelectionToolbarCustomAct
  * config without its state reads it as off, as the schema does.
  */
 export function createDefaultImproveWritingAction(): SelectionToolbarCustomAction {
-  const action = createImproveWritingDefinition(BUILT_IN_AI_PROVIDER_ID)
+  const action = createImproveWritingDefinition(DEFAULT_PROVIDER_CONFIG.deepseek.id)
   const outputSchema = action.outputSchema.map((field) => ({
     ...field,
     id: `default-${field.id}`,
@@ -172,7 +170,7 @@ export const DEFAULT_CONFIG: Config = {
   },
   providersConfig: DEFAULT_PROVIDER_CONFIG_LIST,
   pageTranslation: {
-    providerId: MICROSOFT_TRANSLATE_PROVIDER_ID,
+    providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
     mode: "bilingual",
     modeShortcut: DEFAULT_TRANSLATION_MODE_SHORTCUT_KEY,
     node: {
@@ -232,7 +230,7 @@ export const DEFAULT_CONFIG: Config = {
     features: {
       translate: {
         enabled: true,
-        providerId: MICROSOFT_TRANSLATE_PROVIDER_ID,
+        providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         shortcut: DEFAULT_SELECTION_TRANSLATION_SHORTCUT_KEY,
       },
       speak: {
@@ -243,17 +241,17 @@ export const DEFAULT_CONFIG: Config = {
     builtInActions: {
       dictionary: {
         enabled: true,
-        providerId: BUILT_IN_AI_PROVIDER_ID,
+        providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         shortcut: BUILT_IN_ACTION_DEFAULT_SHORTCUTS[BUILT_IN_DICTIONARY_ACTION_ID],
       },
       sentenceAnalysis: {
         enabled: true,
-        providerId: BUILT_IN_AI_PROVIDER_ID,
+        providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         shortcut: BUILT_IN_ACTION_DEFAULT_SHORTCUTS[BUILT_IN_SENTENCE_ANALYSIS_ACTION_ID],
       },
       improveWriting: {
         enabled: true,
-        providerId: BUILT_IN_AI_PROVIDER_ID,
+        providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         shortcut: BUILT_IN_ACTION_DEFAULT_SHORTCUTS[BUILT_IN_IMPROVE_WRITING_ACTION_ID],
       },
     },
@@ -263,10 +261,10 @@ export const DEFAULT_CONFIG: Config = {
     noteSuggestion: {
       enabled: true,
       actionId: BUILT_IN_DICTIONARY_ACTION_ID,
-      // Fresh installs always carry the OpenAI default provider; suggestions
+      // Fresh installs always carry the DeepSeek default provider; suggestions
       // start working the moment the user adds their key, with no hosted plan
       // requirement attached.
-      providerId: DEFAULT_PROVIDER_CONFIG.openai.id,
+      providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
     },
   },
   sideContent: {
@@ -280,7 +278,7 @@ export const DEFAULT_CONFIG: Config = {
   },
   inputTranslation: {
     enabled: true,
-    providerId: MICROSOFT_TRANSLATE_PROVIDER_ID,
+    providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
     fromLang: "targetCode",
     toLang: "sourceCode",
     enableCycle: false,
@@ -290,7 +288,7 @@ export const DEFAULT_CONFIG: Config = {
     enabled: true,
     autoStart: { youtube: false, xcom: false, netflix: false },
     toggleShortcut: DEFAULT_SUBTITLES_TOGGLE_SHORTCUT_KEY,
-    providerId: MICROSOFT_TRANSLATE_PROVIDER_ID,
+    providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
     style: {
       displayMode: DEFAULT_DISPLAY_MODE,
       translationPosition: DEFAULT_TRANSLATION_POSITION,
@@ -358,15 +356,15 @@ export function buildFreshDefaultConfig(): Config {
       builtInActions: {
         dictionary: {
           enabled: true,
-          providerId: BUILT_IN_AI_PROVIDER_ID,
+          providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         },
         sentenceAnalysis: {
           enabled: true,
-          providerId: BUILT_IN_AI_PROVIDER_ID,
+          providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         },
         improveWriting: {
           enabled: true,
-          providerId: BUILT_IN_AI_PROVIDER_ID,
+          providerId: DEFAULT_PROVIDER_CONFIG.deepseek.id,
         },
       },
       customActions: [],

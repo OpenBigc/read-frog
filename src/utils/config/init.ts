@@ -1,5 +1,6 @@
 import type { Config } from "@/types/config/config"
 import type { ConfigMeta } from "@/types/config/meta"
+import { dequal } from "dequal"
 import { storage } from "#imports"
 import { configSchema } from "@/types/config/config"
 import { isAPIProviderConfig } from "@/types/config/provider"
@@ -11,6 +12,7 @@ import {
   DEFAULT_CONFIG,
 } from "../constants/config"
 import { logger } from "../logger"
+import { normalizeLocalEditionConfig } from "./local-edition"
 import { runMigration } from "./migration"
 
 export interface InitializeConfigResult {
@@ -61,7 +63,9 @@ export async function initializeConfig(): Promise<InitializeConfigResult> {
     }
   }
 
-  const parsedConfig = configSchema.safeParse(config)
+  const normalizedConfig = normalizeLocalEditionConfig(config)
+  didConfigChange = didConfigChange || !dequal(config, normalizedConfig)
+  const parsedConfig = configSchema.safeParse(normalizedConfig)
   if (parsedConfig.success) {
     // Stored as every reader gets it: defaults filled in, the selection
     // toolbar's order and pins in step with its actions.

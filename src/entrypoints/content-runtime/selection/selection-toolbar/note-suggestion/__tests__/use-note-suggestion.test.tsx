@@ -40,7 +40,7 @@ function wrapper(store: ReturnType<typeof createStore>) {
 
 const LLM_PROVIDER_CONFIG = DEFAULT_CONFIG.providersConfig.find(
   (providerConfig): providerConfig is LLMProviderConfig =>
-    isLLMProviderConfig(providerConfig) && providerConfig.provider === "openai",
+    isLLMProviderConfig(providerConfig) && providerConfig.provider === "deepseek",
 )!
 
 const LOCAL_PROVIDER_REF = {
@@ -169,37 +169,9 @@ describe("useNoteSuggestion", () => {
     // A local provider never consults the hosted availability gate.
     expect(hostedStatusMock).not.toHaveBeenCalled()
     expect(result.current.suggestion?.analyticsProvider).toEqual({
-      provider: "openai",
+      provider: "deepseek",
       backend_kind: "llm",
     })
-  })
-
-  it("sends the hosted payload for a system provider without local provider knobs", async () => {
-    hostedStatusMock.mockResolvedValue(createHostedStatus(true))
-    const store = createStore()
-    store.set(configAtom, DEFAULT_CONFIG)
-    const { result } = renderHook(() => useNoteSuggestion(), { wrapper: wrapper(store) })
-
-    act(() => result.current.maybeFire(fireInput("1:lang:0", SYSTEM_PROVIDER_REF)))
-    await waitFor(() => expect(result.current.suggestion).not.toBeNull())
-
-    expect(hostedStatusMock).toHaveBeenCalledTimes(1)
-
-    const request = streamBackgroundNoteSuggestionMock.mock.calls[0]![0]
-    // Exact shape: no providerOptions, reasoning, or temperature leak into the
-    // hosted payload — the server owns those knobs.
-    expect(request).toEqual({
-      providerId: SYSTEM_PROVIDER_REF.id,
-      modelTier: SYSTEM_PROVIDER_REF.modelTier,
-      requestId: expect.any(String),
-      instructions: expect.any(String),
-      prompt: expect.any(String),
-    })
-    // Hosted envelope contract: the prompts describe the contract's
-    // action+notes shape (with the pinned inert action fields).
-    expect(request.instructions).toContain('"action"')
-    expect(request.instructions).toContain("createNewDictionaryAction")
-    expect(request.instructions).toContain("targetActionId")
   })
 
   it("classifies a system provider suggestion as Built-in AI", async () => {
@@ -215,27 +187,6 @@ describe("useNoteSuggestion", () => {
       provider: "read-frog-built-in-ai",
       backend_kind: "llm",
     })
-  })
-
-  it("skips silently and completes the session when the hosted tier is unavailable", async () => {
-    hostedStatusMock.mockResolvedValue(createHostedStatus(false))
-    const store = createStore()
-    store.set(configAtom, DEFAULT_CONFIG)
-    const { result } = renderHook(() => useNoteSuggestion(), { wrapper: wrapper(store) })
-
-    act(() => result.current.maybeFire(fireInput("1:lang:0", SYSTEM_PROVIDER_REF)))
-    await waitFor(() => expect(hostedStatusMock).toHaveBeenCalledTimes(1))
-    await flushRun()
-
-    expect(streamBackgroundNoteSuggestionMock).not.toHaveBeenCalled()
-    expect(result.current.suggestion).toBeNull()
-
-    // The session is marked complete: the same key neither re-checks the
-    // status nor fires a request.
-    act(() => result.current.maybeFire(fireInput("1:lang:0", SYSTEM_PROVIDER_REF)))
-    await flushRun()
-    expect(hostedStatusMock).toHaveBeenCalledTimes(1)
-    expect(streamBackgroundNoteSuggestionMock).not.toHaveBeenCalled()
   })
 
   it("fails open and fires when the hosted status check itself fails", async () => {

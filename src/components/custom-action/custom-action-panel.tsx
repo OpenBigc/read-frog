@@ -3,7 +3,6 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai"
 import { useEffect, useMemo, useRef } from "react"
 import { useHostedAiProviderOptions } from "@/components/llm-providers/use-hosted-ai-provider-options"
 import { SelectionPopover } from "@/components/ui/selection-popover"
-import { ReviewDueTab } from "@/components/ui/selection-popover/review-due-tab"
 import { SelectionToolbarErrorAlert } from "@/components/ui/selection-popover/selection-toolbar-error-alert"
 import { SelectionToolbarFooterContent } from "@/components/ui/selection-popover/selection-toolbar-footer-content"
 import { SelectionToolbarTitleContent } from "@/components/ui/selection-popover/selection-toolbar-title-content"
@@ -163,7 +162,6 @@ export function CustomActionPanel() {
         />
         <SelectionToolbarErrorAlert error={error} />
       </SelectionPopover.Body>
-      <ReviewDueTab source="extension_custom_ai_action" />
       <CustomActionFooterContent
         paragraphsText={request.contextText}
         providers={providers}

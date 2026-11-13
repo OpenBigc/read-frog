@@ -4,8 +4,7 @@ import { describe, expect, it, vi } from "vitest"
 import { initI18n } from "@/utils/i18n"
 import { addProvider, duplicateProvider } from "../utils"
 
-type AlibabaProviderConfig = Extract<APIProviderConfig, { provider: "alibaba" }>
-type OpenAICompatibleProviderConfig = Extract<APIProviderConfig, { provider: "openai-compatible" }>
+type AlibabaProviderConfig = Extract<APIProviderConfig, { provider: "deepseek" }>
 
 describe("api provider utils", () => {
   it("adds the OpenAI-compatible provider with its localized default description", async () => {
@@ -26,59 +25,34 @@ describe("api provider utils", () => {
     )
   })
 
-  it("adds Custom Responses without changing an existing custom provider name", async () => {
-    await initI18n("en")
-    const existingProvider: OpenAICompatibleProviderConfig = {
-      id: "legacy-custom-provider",
-      name: "My Custom Provider",
-      enabled: true,
-      provider: "openai-compatible",
-      baseURL: "https://example.com/v1",
-      model: {
-        model: "use-custom-model",
-        isCustomModel: true,
-        customModel: "legacy-model",
-      },
-    }
-    let updatedProviders: Config["providersConfig"] | undefined
-    const setProvidersConfig = vi.fn<(...args: any[]) => any>(async (config) => {
-      updatedProviders = config as Config["providersConfig"]
-    })
-
-    await addProvider("open-responses", [existingProvider], setProvidersConfig)
-
-    expect(updatedProviders?.[0]?.name).toBe("My Custom Provider")
-    expect(updatedProviders?.[1]).toEqual(
-      expect.objectContaining({
-        provider: "open-responses",
-        name: "options.apiProviders.providers.name.customResponses",
-        url: "https://api.example.com/v1/responses",
-      }),
-    )
+  it("rejects a removed provider type before writing configuration", async () => {
+    const writer = vi.fn<(...args: unknown[]) => Promise<void>>()
+    await expect(addProvider("open-responses", [], writer)).rejects.toThrow("Unsupported provider")
+    expect(writer).not.toHaveBeenCalled()
   })
 
   it("duplicates an existing provider config with a fresh id and unique name", async () => {
     const sourceProvider: AlibabaProviderConfig = {
       id: "alibaba-original",
-      name: "Alibaba Cloud",
+      name: "DeepSeek",
       description: "shared credentials",
       enabled: true,
-      provider: "alibaba",
+      provider: "deepseek",
       apiKey: "[REDACTED]",
       baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
       temperature: 0.3,
       providerOptions: { extraBody: { enable_thinking: false } },
       headers: { "x-test": "enabled" },
       model: {
-        model: "qwen3-max",
+        model: "deepseek-v4-flash",
         isCustomModel: true,
-        customModel: "qwen3-max",
+        customModel: "deepseek-v4-flash",
       },
     }
     const existingCopy: AlibabaProviderConfig = {
       ...sourceProvider,
       id: "alibaba-copy",
-      name: "Alibaba Cloud 1",
+      name: "DeepSeek 1",
     }
     const providersConfig = [sourceProvider, existingCopy] as Config["providersConfig"]
     let updatedProviders: Config["providersConfig"] | undefined
@@ -104,7 +78,7 @@ describe("api provider utils", () => {
     expect(duplicatedProvider).toEqual({
       ...sourceProvider,
       id: newProviderId,
-      name: "Alibaba Cloud 2",
+      name: "DeepSeek 2",
     })
     expect(duplicatedProvider).not.toBe(sourceProvider)
     expect(duplicatedProvider.model).not.toBe(sourceProvider.model)

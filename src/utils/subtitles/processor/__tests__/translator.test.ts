@@ -42,7 +42,7 @@ describe("subtitles translator", () => {
       },
       videoSubtitles: {
         ...DEFAULT_CONFIG.videoSubtitles,
-        providerId: "openai-default",
+        providerId: "deepseek-default",
       },
     })
 
@@ -120,7 +120,7 @@ describe("subtitles translator", () => {
         subtitlesContext: "subtitle transcript",
         providerRef: expect.objectContaining({
           kind: "local",
-          config: expect.objectContaining({ id: "openai-default" }),
+          config: expect.objectContaining({ id: "deepseek-default" }),
         }),
       }),
     )
@@ -145,7 +145,7 @@ describe("subtitles translator", () => {
       },
       videoSubtitles: {
         ...DEFAULT_CONFIG.videoSubtitles,
-        providerId: "openai-default",
+        providerId: "deepseek-default",
       },
     })
 
@@ -180,7 +180,7 @@ describe("subtitles translator", () => {
       },
       videoSubtitles: {
         ...DEFAULT_CONFIG.videoSubtitles,
-        providerId: "openai-default",
+        providerId: "deepseek-default",
       },
     })
     const { translateSubtitles } = await import("../translator")
@@ -214,7 +214,7 @@ describe("subtitles translator", () => {
     const configSnapshot = {
       ...DEFAULT_CONFIG,
       pageTranslation: { ...DEFAULT_CONFIG.pageTranslation, enableAIContentAware: true },
-      videoSubtitles: { ...DEFAULT_CONFIG.videoSubtitles, providerId: "openai-default" },
+      videoSubtitles: { ...DEFAULT_CONFIG.videoSubtitles, providerId: "deepseek-default" },
     }
     const videoContext = { videoTitle: "Video title", subtitlesTextContent: "subtitle transcript" }
 
@@ -245,9 +245,9 @@ describe("subtitles translator", () => {
     const baseProviderRef: SerializableProviderRef = {
       kind: "local",
       config: {
-        id: "openai-default",
+        id: "deepseek-default",
         name: "OpenAI",
-        provider: "openai",
+        provider: "deepseek",
         enabled: true,
         apiKey: "sk-test",
         model: { model: "gpt-5-mini", isCustomModel: false, customModel: null },
@@ -290,9 +290,9 @@ describe("subtitles translator", () => {
     const baseProviderRef: SerializableProviderRef = {
       kind: "local",
       config: {
-        id: "openai-default",
+        id: "deepseek-default",
         name: "OpenAI",
-        provider: "openai",
+        provider: "deepseek",
         enabled: true,
         apiKey: "sk-test",
         model: { model: "gpt-5-mini", isCustomModel: false, customModel: null },
